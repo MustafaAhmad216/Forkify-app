@@ -8,7 +8,9 @@ class RecipeView extends View {
   _message = "Success!";
 
   addHandlerRender(handler) {
-    ["hashchange", "load"].forEach(ev => window.addEventListener(ev, handler));
+    ["hashchange", "load"].forEach(ev =>
+      window.addEventListener(ev, handler)
+    );
   }
   addHandlerUpdateServings(handler) {
     this._parentElement.addEventListener("click", function (e) {
@@ -24,7 +26,7 @@ class RecipeView extends View {
       const btn = e.target.closest(".btn--bookmark");
       if (!btn) return;
       handler();
-    });
+    })
   }
 
   _generateMarkup() {
@@ -86,9 +88,7 @@ class RecipeView extends View {
 
         <button class="btn--round btn--bookmark">
             <svg class="">
-            <use href="${icons}.svg#icon-bookmark${
-      this._data.bookmarked ? "-fill" : ""
-    }"></use>
+            <use href="${icons}.svg#icon-bookmark${this._data.bookmarked ? "-fill" : ""}"></use>
             </svg>
         </button>
         </div>
@@ -104,6 +104,8 @@ class RecipeView extends View {
                         </svg>
                         <div class="recipe__quantity">${
                           ing.quantity
+                            ? new Fraction(ing.quantity).toString()
+                            : ""
                         }</div>
                         <div class="recipe__description">
                         <span class="recipe__unit">${ing.unit ?? ""}</span>
