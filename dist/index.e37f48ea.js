@@ -980,7 +980,7 @@ var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-// import { Fraction } from "fractional";
+var _fractional = require("fractional");
 class RecipeView extends (0, _viewJsDefault.default) {
     _parentElement = document.querySelector(".recipe");
     _errorMessage = "Recipe couldn't be found.<br>Please try another recipe";
@@ -1070,7 +1070,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
                         <svg class="recipe__icon">
                         <use href="${0, _iconsSvgDefault.default}.svg#icon-check"></use>
                         </svg>
-                        <div class="recipe__quantity">${ing.quantity.toFixed(2)}</div>
+                        <div class="recipe__quantity">${ing.quantity ? new (0, _fractional.Fraction)(ing.quantity).toString() : ""}</div>
                         <div class="recipe__description">
                         <span class="recipe__unit">${ing.unit ?? ""}</span>
                         ${ing.description ?? ""}
@@ -1102,7 +1102,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
 }
 exports.default = new RecipeView();
 
-},{"./View.js":"5cUXS","url:../../img/icons.svg":"loVOp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5cUXS":[function(require,module,exports) {
+},{"./View.js":"5cUXS","url:../../img/icons.svg":"loVOp","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5cUXS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
@@ -1229,90 +1229,7 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"cSbZE":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
-var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _view = require("./View");
-var _viewDefault = parcelHelpers.interopDefault(_view);
-var _previewViewJs = require("./previewView.js");
-var _previewViewJsDefault = parcelHelpers.interopDefault(_previewViewJs);
-class ResultsView extends (0, _viewDefault.default) {
-    _parentElement = document.querySelector(".results");
-    _errorMessage = "Recipe couldn't be found.<br>Please try another recipe";
-    _message = "Success!";
-    _generateMarkup() {
-        return this._data.map((result)=>(0, _previewViewJsDefault.default).render(result, false)).join("");
-    }
-}
-exports.default = new ResultsView();
-
-},{"url:../../img/icons.svg":"loVOp","./View":"5cUXS","./previewView.js":"1FDQ6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1FDQ6":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
-var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _view = require("./View");
-var _viewDefault = parcelHelpers.interopDefault(_view);
-class previewView extends (0, _viewDefault.default) {
-    _parentElement = "";
-    _generateMarkup() {
-        const id = window.location.hash.slice(1);
-        return `
-        <li class="preview">
-          <a class="preview__link ${this._data.id === id ? "preview__link--active" : ""}" href="#${this._data.id}">
-              <figure class="preview__fig">
-                  <img src='${this._data.image}' alt="${this._data.title}" />
-              </figure>
-              <div class="preview__data">
-              <h4 class="preview__title">${this._data.title} ...</h4>
-              <p class="preview__publisher">${this._data.publisher} </p>
-              <div class="preview__user-generated ${this._data.key ? "" : "hidden"}">
-              <svg>
-              <use href="${0, _iconsSvgDefault.default}.svg#icon-user"></use>
-              </svg>
-          </div> 
-              </div>
-          </a>
-          </li>`;
-    }
-}
-exports.default = new previewView();
-
-},{"url:../../img/icons.svg":"loVOp","./View":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9OQAM":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _viewJs = require("./View.js");
-var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
-var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
-var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _fractional = require("fractional");
-class SearchView extends (0, _viewJsDefault.default) {
-    _parentElement = document.querySelector(".search");
-    _data;
-    _errorMessage = "Recipe couldn't be found.<br>Please try another recipe";
-    _message = "Success!";
-    getQuery() {
-        const query = this._parentElement.querySelector(".search__field").value;
-        this._clearInput();
-        return query;
-    }
-    addHandlerSearch(handler) {
-        this._parentElement.addEventListener("submit", (e)=>{
-            e.preventDefault();
-            handler();
-        });
-    // this._parentElement.querySelector(".search__field").addEventListener("keyup", handler)
-    // this._parentElement.querySelector(".search__btn").addEventListener("click", handler);
-    }
-    _clearInput() {
-        this._parentElement.querySelector(".search__field").value = "";
-    }
-}
-exports.default = new SearchView();
-
-},{"./View.js":"5cUXS","url:../../img/icons.svg":"loVOp","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3SU56":[function(require,module,exports) {
+},{}],"3SU56":[function(require,module,exports) {
 /*
 fraction.js
 A Javascript fraction library.
@@ -1565,7 +1482,90 @@ Fraction.primeFactors = function(n) {
 };
 module.exports.Fraction = Fraction;
 
-},{}],"6z7bi":[function(require,module,exports) {
+},{}],"cSbZE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+var _previewViewJs = require("./previewView.js");
+var _previewViewJsDefault = parcelHelpers.interopDefault(_previewViewJs);
+class ResultsView extends (0, _viewDefault.default) {
+    _parentElement = document.querySelector(".results");
+    _errorMessage = "Recipe couldn't be found.<br>Please try another recipe";
+    _message = "Success!";
+    _generateMarkup() {
+        return this._data.map((result)=>(0, _previewViewJsDefault.default).render(result, false)).join("");
+    }
+}
+exports.default = new ResultsView();
+
+},{"url:../../img/icons.svg":"loVOp","./View":"5cUXS","./previewView.js":"1FDQ6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1FDQ6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+var _view = require("./View");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class previewView extends (0, _viewDefault.default) {
+    _parentElement = "";
+    _generateMarkup() {
+        const id = window.location.hash.slice(1);
+        return `
+        <li class="preview">
+          <a class="preview__link ${this._data.id === id ? "preview__link--active" : ""}" href="#${this._data.id}">
+              <figure class="preview__fig">
+                  <img src='${this._data.image}' alt="${this._data.title}" />
+              </figure>
+              <div class="preview__data">
+              <h4 class="preview__title">${this._data.title} ...</h4>
+              <p class="preview__publisher">${this._data.publisher} </p>
+              <div class="preview__user-generated ${this._data.key ? "" : "hidden"}">
+              <svg>
+              <use href="${0, _iconsSvgDefault.default}.svg#icon-user"></use>
+              </svg>
+          </div> 
+              </div>
+          </a>
+          </li>`;
+    }
+}
+exports.default = new previewView();
+
+},{"url:../../img/icons.svg":"loVOp","./View":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9OQAM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+var _fractional = require("fractional");
+class SearchView extends (0, _viewJsDefault.default) {
+    _parentElement = document.querySelector(".search");
+    _data;
+    _errorMessage = "Recipe couldn't be found.<br>Please try another recipe";
+    _message = "Success!";
+    getQuery() {
+        const query = this._parentElement.querySelector(".search__field").value;
+        this._clearInput();
+        return query;
+    }
+    addHandlerSearch(handler) {
+        this._parentElement.addEventListener("submit", (e)=>{
+            e.preventDefault();
+            handler();
+        });
+    // this._parentElement.querySelector(".search__field").addEventListener("keyup", handler)
+    // this._parentElement.querySelector(".search__btn").addEventListener("click", handler);
+    }
+    _clearInput() {
+        this._parentElement.querySelector(".search__field").value = "";
+    }
+}
+exports.default = new SearchView();
+
+},{"./View.js":"5cUXS","url:../../img/icons.svg":"loVOp","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6z7bi":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg"); //Parcel 2
